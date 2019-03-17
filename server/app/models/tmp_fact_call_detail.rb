@@ -43,4 +43,10 @@
 #
 
 class TmpFactCallDetail < ApplicationRecord
+  def self.add_dimension(target_dimension, target_col, ref_col)
+    tmp_arr = TmpFactCallDetail.pluck(ref_col).uniq
+    tmp_arr.each do |tmp|
+      target_dimension.find_or_create_by(target_col => tmp)
+    end
+  end
 end

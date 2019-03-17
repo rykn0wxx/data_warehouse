@@ -48,7 +48,7 @@ $link-hover-decoration:			none;
 
 $table-cell-padding:				.6rem;
 $table-dark-bg:             $dark;
-$table-dark-color:          rgba(250,250,250,0.5);
+$table-dark-color:          rgba(255,255,255,0.87);
 $border-color:							rgba(0,0,0,0.12);
 
 $dropdown-bg:               rgba(255, 255, 255, 0.87);
@@ -63,3 +63,4 @@ $dropdown-bg:               rgba(255, 255, 255, 0.87);
 @import "custom/button";
 @import "custom/card";
 @import "custom/input";
+@import "custom/table";

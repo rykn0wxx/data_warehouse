@@ -1,0 +1,13 @@
+call_action_reason
+AgentAvailable
+AgentHungUp
+CallComplete
+ConferenceComplete
+ConsultationComplete
+CustomerHangup
+CustomerSelected
+InternalFailure
+RingNoAnswer
+ThirdPartyAvailable
+ThirdPartyHungup
+XferedByAgent

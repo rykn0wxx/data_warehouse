@@ -1,0 +1,70 @@
+<% title "Index", true, true %>
+
+<div class="row">
+  <div class="col-sm-6">
+    <h1>Temp Fact Call Details</h1>
+  </div>
+  <div class="col-sm-6 text-right">
+    <%= link_to import_tmp_fact_call_details_path, :class => 'btn btn--light' do -%>
+      Bulk Upload Temp Records
+    <% end -%>
+    <%= link_to run_dim_tmp_fact_call_details_path, :class => 'btn btn--light' do -%>
+      Run Dim
+    <% end -%>
+  </div>
+</div>
+
+<div class="table-responsive">
+  <table class="table table-striped table-hover table-sm app-table">
+    <thead class="thead-dark">
+      <tr>
+        <%- @tmp_fact.columns.each do |column| -%>
+          <%- unless column.name.in? ["id", "created_at", "updated_at"] -%>
+            <th><%= column.human_name %></th>
+          <%- end -%>
+        <%- end -%>
+      </tr>
+    </thead>
+    <tbody>
+      <% @tmp_fact_call_details.each do |tmp_record| %>
+        <%= content_tag :tr, :id => dom_id(tmp_record), :class => dom_class(tmp_record) + " table-row", :tabindex => 0, :role => "link", :data => { :'row-url' => tmp_fact_call_detail_path(tmp_record), :'row-disabled' => true } do %>
+          <td><%= tmp_record.tmp_parent_project %></td>
+          <td><%= tmp_record.tmp_project_name %></td>
+          <td><%= tmp_record.tmp_timezone %></td>
+          <td><%= tmp_record.tmp_call_category %></td>
+          <td><%= tmp_record.tmp_call_type %></td>
+          <td><%= tmp_record.tmp_call_action %></td>
+          <td><%= tmp_record.tmp_call_action_reason %></td>
+          <td><%= tmp_record.tmp_disp %></td>
+          <td><%= tmp_record.tmp_service_id %></td>
+          <td><%= tmp_record.tmp_service_name %></td>
+          <td><%= tmp_record.tmp_orig_srv %></td>
+          <td><%= tmp_record.tmp_user_id %></td>
+          <td><%= tmp_record.tmp_ivr_param_1 %></td>
+          <td><%= tmp_record.tmp_ivr_param_2 %></td>
+          <td><%= tmp_record.tmp_ivr_param_3 %></td>
+          <td><%= tmp_record.tmp_ivr_param_4 %></td>
+          <td><%= tmp_record.tmp_ivr_param_9 %></td>
+          <td><%= tmp_record.tmp_ivr_param_10 %></td>
+          <td><%= tmp_record.tmp_ivr_param_16 %></td>
+          <td><%= tmp_record.tmp_ivr_param_18 %></td>
+          <td><%= tmp_record.tmp_ivr_param_19 %></td>
+          <td><%= tmp_record.tmp_call %></td>
+          <td><%= tmp_record.tmp_seq %></td>
+          <td><%= tmp_record.tmp_dialed_num %></td>
+          <td><%= tmp_record.tmp_answer_date.strftime("%Y-%m-%d %H:%M:%S") %></td>
+          <td><%= tmp_record.tmp_end_date.strftime("%Y-%m-%d %H:%M:%S") %></td>
+          <td><%= tmp_record.tmp_end_date_tz.strftime("%Y-%m-%d %H:%M:%S") %></td>
+          <td><%= tmp_record.tmp_start_date.strftime("%Y-%m-%d %H:%M:%S") %></td>
+          <td><%= tmp_record.tmp_start_date_tz.strftime("%Y-%m-%d %H:%M:%S") %></td>
+          <td><%= tmp_record.tmp_wrap_end_date.strftime("%Y-%m-%d %H:%M:%S") %></td>
+          <td><%= tmp_record.tmp_hold_number %></td>
+          <td><%= tmp_record.tmp_queue_time %></td>
+          <td><%= tmp_record.tmp_talk_time %></td>
+          <td><%= tmp_record.tmp_hold_time %></td>
+          <td><%= tmp_record.tmp_wrap_time %></td>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
+</div>

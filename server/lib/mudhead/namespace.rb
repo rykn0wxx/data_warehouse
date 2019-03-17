@@ -24,9 +24,10 @@ module Mudhead
     attr_reader :namespace
 
     def all_routes
-      Rails.application.routes.routes.map do |route|
-        route.defaults.values_at(:controller, :action).map(&:to_s)
+      scope_routes = Rails.application.routes.routes.map do |route|
+        route.defaults.values_at(:controller, :action).map(&:to_s) if route.name.present?
       end
+      scope_routes.compact
     end
 
   end

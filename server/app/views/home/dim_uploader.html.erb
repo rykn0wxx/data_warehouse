@@ -1,0 +1,25 @@
+<% title "Dim Uploader", true, true %>
+
+<div class="content">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="card">
+        <div class="card-body">
+          Dim Uploader
+          <%= form_tag url_for(:only_path => true, :action => "do_import"), :multipart => true, :novalidate => true, :class => "md-form" do |f| %>
+            <div class="form-group">
+              <label for="model" class="form-label">Select Model</label>
+              <%= select_tag "model", options_for_select(@models), :class => "form-control", :include_blank => true %>
+            </div>
+            <%= file_field_tag :file, :accept => ".csv" %>
+            <div class="actions">
+              <%= button_tag(:type => "submit", :class => "btn") do %>
+                Submit
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

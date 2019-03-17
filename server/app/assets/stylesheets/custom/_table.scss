@@ -1,0 +1,42 @@
+.rykn0wxx {
+  .mudhead {
+    .app-table {
+      margin-bottom: 16px;
+      max-width: 100%;
+      width: 100%;
+      border-spacing: 0;
+      border-radius: 2px;
+      th {
+        vertical-align: middle;
+        text-align: center;
+        line-height: 1.4;
+      }
+      .table-row {
+        font-size: 14px;
+        min-height: 33px;
+        cursor: pointer;
+        td {
+          vertical-align: middle;
+        }
+        &__link {
+          font-size: 14px;
+          color: $secondary;
+          transition: color 0.2s cubic-bezier(0.34, 1.61, 0.7, 1);
+          line-height: 1;
+          &:hover {
+            color: $primary;
+            background-color: transparent;
+          }
+        }
+        &__actions {
+          padding: 0;
+          text-align: center;
+          vertical-align: middle;
+        }
+        &:active, &:focus {
+          outline: none;
+        }
+      }
+    }
+  }
+}

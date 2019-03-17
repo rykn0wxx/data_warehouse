@@ -84,7 +84,7 @@ module Mudhead
 
     def assign_options(options)
       @options = {
-        :batch_size => 1000,
+        :batch_size => 500,
         :validate => true
       }.merge(options.slice(*OPTIONS))
       smart_options
@@ -93,7 +93,7 @@ module Mudhead
     def smart_options
       @smart_options = {
         :strip_chars_from_headers => /[\-"]/,
-        :chunk_size => 1000,
+        :chunk_size => 500,
         :remove_unmapped_keys => true,
         :verbose => true
       }
