@@ -1,0 +1,62 @@
+ <% title "Login", false, false %>
+ 
+<div class="auth login-cover login-cover--cover">
+  <div class="login-cover--image" style="background-image: url(<%= image_path('login-bg-001.jpeg') %>)"></div>
+  <div class="login-cover--bg"></div>
+</div>
+
+<div class="page-container fade show">
+  <div class="login animated fadeIn">
+    <div class="login-header">
+      <div class="login-brand">
+        <span class="login-logo"></span>
+        <%= link_to root_path, :class => "login-link" do %>
+        <b>mudHead</b>
+        Admin
+        <% end %>
+        <small>Sign in to start your session</small>
+      </div>
+      <div class="login-icon">
+        <%= mi.lock %>
+      </div>
+    </div>
+    <div class="login-content">
+      <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+        <div class="form-inputs">
+          <div class="form-input-group mb-4">
+            <div class="form-group form-group--float">
+              <%= f.input_field :login,
+                :required => true,
+                :autofocus => false,
+                :autocomplete => "off",
+                :class => "form-control form-control-lg",
+                :data => { :'form-input' => "float" } %>
+              <%= f.label :login, :class => "form-label" %>
+              <i class="form-group__bar"></i>
+            </div>
+          </div>
+          <div class="form-input-group mb-4">
+            <div class="form-group form-group--float">
+              <%= f.input_field :password,
+                :as => :password,
+                :required => true,
+                :autofocus => false,
+                :autocomplete => "off",
+                :class => "form-control form-control-lg",
+                :data => { :'form-input' => "float" } %>
+              <%= f.label :password, :class => "form-label" %>
+              <i class="form-group__bar"></i>
+            </div>
+          </div>
+        </div>
+        <div class="login-buttons">
+          <%= f.button :submit, "Log in", :class => "btn btn-dark btn-block" %>
+        </div>
+      <% end %>
+      <p class="login-footer">
+        Not yet a memeber?
+        <%= link_to "Register", new_registration_path(resource_name) %>
+      </p>
+    </div>
+  </div>
+</div>
