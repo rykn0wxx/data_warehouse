@@ -6,7 +6,8 @@ module Mudhead
     OPTIONS = [
       :batch_size,
       :before_batch_import,
-      :excluded_id
+      :excluded_id,
+      :validate
     ]
 
     def initialize(resource, csv_file, options = {})
@@ -27,7 +28,8 @@ module Mudhead
     def import_options
       @import_options ||= options.slice(
         :validate,
-        :batch_transaction
+        :batch_transaction,
+        :validate_uniqueness
       )
     end
 
@@ -55,16 +57,26 @@ module Mudhead
       end
     end
 
+    # def batch_import
+    #   batch_result = nil
+    #   ActiveRecord::Base.connection.reconnect!
+    #   @resource.transaction do
+    #     run_callback(:before_batch_import)
+    #     batch_added = to_be_added
+    #     batch_headers = prepare_headers
+    #     batch_result = @resource.import(batch_headers, batch_added, import_options)
+    #     raise ActiveRecord::Rollback if import_options[:batch_transaction] && batch_result.failed_instances.any?
+    #   end
+    #   batch_result
+    # end
     def batch_import
       batch_result = nil
+      run_callback(:before_batch_import)
+      batch_added = to_be_added
+      batch_headers = prepare_headers
       ActiveRecord::Base.connection.reconnect!
-      @resource.transaction do
-        run_callback(:before_batch_import)
-        batch_added = to_be_added
-        batch_headers = prepare_headers
-        batch_result = @resource.import(batch_headers, batch_added, import_options)
-        raise ActiveRecord::Rollback if import_options[:batch_transaction] && batch_result.failed_instances.any?
-      end
+      batch_result = @resource.import(batch_headers, batch_added, import_options)
+      raise ActiveRecord::Rollback if import_options[:batch_transaction] && batch_result.failed_instances.any?
       batch_result
     end
 
@@ -85,7 +97,8 @@ module Mudhead
     def assign_options(options)
       @options = {
         :batch_size => 500,
-        :validate => true
+        :validate => true,
+        :validate_uniqueness => true
       }.merge(options.slice(*OPTIONS))
       smart_options
     end

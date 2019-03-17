@@ -15,6 +15,7 @@ gem 'rack-cors'
 group :development, :test, :staging do
   gem 'better_errors'
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw, :ruby]
+  gem 'solargraph'
 end
 
 group :development, :staging do

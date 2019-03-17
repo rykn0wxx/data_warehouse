@@ -17,5 +17,8 @@
 
 class DimIvrParam < ApplicationRecord
   belongs_to :dim_project
-  validates :ivr_param, :ivr_code, presence: true
+  validates :ivr_param, :ivr_code, presence: true, :uniqueness => {
+    :scope => [:ivr_code, :dim_project_id],
+    :message => 'ivr param record already exists'
+  }
 end

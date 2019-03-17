@@ -22,5 +22,9 @@ class DimUipService < ApplicationRecord
   belongs_to :dim_call_service
   belongs_to :dim_client
   belongs_to :dim_language
-   validates :service_id, presence: true
+  validates :service_id, presence: true
+  validates :service_id, :uniqueness => {
+    :scope => [:dim_call_service_id, :dim_client_id, :dim_language_id],
+    :message => 'uip service record already exists'
+  }
 end
