@@ -1,0 +1,143 @@
+.rykn0wxx {
+  .mudhead {
+    .app-form {
+      .form-input-group {
+        position: relative;
+        min-width: 100%;
+        width: 100%;
+        margin-top: 18px;
+        margin-bottom: 3.5rem;
+      }
+      .form-control {
+        order: 2;
+        display: block;
+        margin-top: 0;
+        background: none;
+        padding: 2px 2px 1px;
+        border-width: 0 0 1px;
+        line-height: 26px;
+        height: 30px;
+        -ms-flex-preferred-size: 26px;
+        border-radius: 0;
+        border-style: solid;
+        width: 100%;
+        box-sizing: border-box;
+        float: left;
+        border-color: rgba(255,255,255,0.12);
+        color: rgba(255, 255, 255, 0.87);
+        &:focus {
+          outline: none;
+          border-color: transparent;
+          box-shadow: none;
+        }
+      }
+      .form-label {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        width: 100%;
+        order: 1;
+        pointer-events: none;
+        padding-left: 3px;
+        padding-right: 0;
+        z-index: 1;
+        transform: translate3d(0,28px,0) scale(1);
+        transition: transform .4s cubic-bezier(.25,.8,.25,1);
+        max-width: 100%;
+        transform-origin: left top;
+        position: absolute;
+        bottom: 100%;
+        left: 0;
+        right: auto;
+        color: rgba(255, 255, 255, 0.38);
+      }
+      .form-group__bar {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        z-index: 1;
+        width: 100%;
+        &::before {
+          left: 50%;
+        }
+        &::after {
+          right: 50%;
+        }
+        &::after, &::before {
+          content: '';
+          position: absolute;
+          height: 1px;
+          width: 0;
+          bottom: 0;
+          transition: all;
+          transition-duration: .3s;
+          transition-timing-function: ease;
+          background-color: $primary;
+        }
+      }
+      .form-group {
+        display: inline-block;
+        position: relative;
+        padding: 2px;
+        margin: 18px 0;
+        vertical-align: middle;
+        &::after {
+          content: '';
+          display: table;
+          clear: both;
+        }
+        &--block {
+          display: block;
+        }
+        &--float {
+          &.form-group--focused {
+            .form-label {
+              transform: translate3d(0, 10px, 0) scale(.75);
+              transition: transform .4s cubic-bezier(.25,.8,.25,1),width .4s cubic-bezier(.25,.8,.25,1);
+              color: $primary;
+            }
+          }
+        }
+        &--filled {
+          .form-label {
+            color: $primary;
+            transform: translate3d(0, 10px, 0) scale(.75);
+            transition: transform .4s cubic-bezier(.25,.8,.25,1),width .4s cubic-bezier(.25,.8,.25,1);
+          }
+          .form-control {
+            border-color: transparent;
+          }
+        }
+        &:not(.form-group--filled) {
+          .form-control {
+            &:not(:focus) {
+              color: transparent;
+            }
+          }
+        }
+        &--focused, &--filled {
+          .form-group__bar {
+            &::before, &::after {
+              width: 50%;
+            }
+          }
+        }
+        &--invalid {
+          .form-label {
+            color: $danger;
+          }
+          &:not(.form-group--filled) {
+            .form-control {
+              border-color: $danger;
+            }
+          }
+          .form-group__bar {
+            &::after, &::before {
+              background-color: $danger;
+            }
+          }
+        }
+      }
+    }
+  }
+}

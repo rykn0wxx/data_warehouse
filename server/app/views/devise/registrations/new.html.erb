@@ -23,32 +23,33 @@
     <div class="login-content">
       <%= simple_form_for resource, :as => resource_name, :url => registration_path(resource_name), :html => { :novalidate => true } do |f| %>
         <div class="form-inputs">
-          <div class="form-input-group mb-4">
-            <div class="form-group form-group--float">
+          <div class="form-input-group">
+            <div class="form-group form-group--block form-group--float">
+              <%= f.label :email, :class => "form-label" %>
               <%= f.input_field :email,
                 :required => true,
                 :autofocus => false,
                 :autocomplete => "off",
                 :class => "form-control form-control-lg",
                 :data => { :'form-input' => "float" } %>
-              <%= f.label :email, :class => "form-label" %>
               <i class="form-group__bar"></i>
             </div>
           </div>
-          <div class="form-input-group mb-4">
-            <div class="form-group form-group--float">
+          <div class="form-input-group">
+            <div class="form-group form-group--block form-group--float">
+              <%= f.label :username, :class => "form-label" %>
               <%= f.input_field :username,
                 :required => true,
                 :autofocus => false,
                 :autocomplete => "off",
                 :class => "form-control form-control-lg",
                 :data => { :'form-input' => "float" } %>
-              <%= f.label :username, :class => "form-label" %>
               <i class="form-group__bar"></i>
             </div>
           </div>
-          <div class="form-input-group mb-4">
-            <div class="form-group form-group--float">
+          <div class="form-input-group">
+            <div class="form-group form-group--block form-group--float">
+              <%= f.label :password, :class => "form-label" %>
               <%= f.input_field :password,
                 :as => :password,
                 :required => true,
@@ -56,12 +57,12 @@
                 :autocomplete => "off",
                 :class => "form-control form-control-lg",
                 :data => { :'form-input' => "float" } %>
-              <%= f.label :password, :class => "form-label" %>
               <i class="form-group__bar"></i>
             </div>
           </div>
-          <div class="form-input-group mb-4">
-            <div class="form-group form-group--float">
+          <div class="form-input-group">
+            <div class="form-group form-group--block form-group--float">
+              <%= f.label :password_confirmation, :class => "form-label" %>
               <%= f.input_field :password_confirmation,
                 :as => :password,
                 :required => true,
@@ -69,13 +70,12 @@
                 :autocomplete => "off",
                 :class => "form-control form-control-lg",
                 :data => { :'form-input' => "float" } %>
-              <%= f.label :password_confirmation, :class => "form-label" %>
               <i class="form-group__bar"></i>
             </div>
           </div>
         </div>
         <div class="login-buttons">
-          <%= f.button :submit, "Log in", :class => "btn btn-dark btn-block" %>
+          <%= f.button :submit, "Log in", :class => "btn btn-dark btn-raised btn-block" %>
         </div>
       <% end %>
       <p class="login-footer">

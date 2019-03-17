@@ -5,5 +5,38 @@
     #app-navbar {
       box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.14), 0 0 2px 2px rgba(0, 0, 0, 0.098), 0 0 5px 1px rgba(0, 0, 0, 0.084);
     }
+    .flash-wrapper {
+      position: absolute;
+      top: 0;
+      width: 100%;
+      z-index: 1050;
+      .flash {
+        height: 64px;
+        text-align: center;
+        line-height: 64px;
+        letter-spacing: .005em;
+        font-weight: 500;
+      }
+      .flash-notice {
+        background-color: rgba($info, 0.85);
+      }
+      .flash-alert {
+        background-color: rgba($warning, 0.85);
+      }
+    }
+  }
+}
+::-webkit-scrollbar {
+  width: 0.5em;
+  height: 0.5em;
+  &-thumb {
+    background: $secondary;
+    cursor: pointer;
+    &:hover {
+      background: darken($secondary, 7.5%);
+    }
+  }
+  &-track {
+    background: 0 0;  
   }
 }

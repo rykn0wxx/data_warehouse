@@ -1,0 +1,36 @@
+.rykn0wxx {
+  .mudhead {
+    .card {
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      margin: 8px;
+      border-radius: 2px;
+      box-shadow: 0 1px 3px 0 rgba(0,0,0,.2),0 1px 1px 0 rgba(0,0,0,.14),0 2px 1px -1px rgba(0,0,0,.12);
+      background-color: $card-bg;
+      &__header {
+        position: relative;
+        border-radius: 2px 2px 0 0;
+        padding: 24px 16px 16px;
+        display: flex;
+        flex: 1 1 auto;
+        flex-direction: row;
+        &--text {
+          flex: 1;
+          flex-direction: column;
+          display: flex;
+        }
+        + .card__content {
+          padding-top: 0;
+        }
+      }
+      &__content {
+        display: block;
+        padding: 16px;
+      }
+      &__action {
+        margin: 8px;
+      }
+    }
+  }
+}
