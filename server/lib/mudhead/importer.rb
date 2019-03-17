@@ -41,7 +41,39 @@ module Mudhead
       end
     end
 
+    def check_or_add_dims(src_col, tar_model, tar_col)
+      dim_heads = []
+      src_arr = @resource.pluck(src_col).uniq.compact
+      tar_arr = tar_model.pluck(tar_col)
+      new_arr = src_arr.select { |x| !tar_arr.include?(x) }
+      if new_arr.length > 0
+        dim_heads.push(tar_col)
+        tar_model.import(dim_heads, new_arr, :validate => true)
+      end
+    end
+
+    def import_with_assoc(target_model, raw_data, data_options = {})
+      imp_data = []
+      col_headers = data_options[:headers]
+      assign_options(data_options)
+      raw_data.each do |rd|
+        imp_data << Hash[[col_headers, rd].transpose]
+      end
+      @chunk = imp_data
+      import_result.add(process_with_assoc(target_model, imp_data, col_headers), imp_data.length)
+      import_result
+    end
+
     protected
+
+    def process_with_assoc(target_model, batch_added, batch_headers)
+      batch_result = nil
+      run_callback(:before_batch_import)
+      ActiveRecord::Base.connection.reconnect!
+      batch_result = target_model.import(batch_headers, batch_added, import_options)
+      raise ActiveRecord::Rollback if import_options[:batch_transaction] && batch_result.failed_instances.any?
+      batch_result
+    end
 
     def cycle(batch)
       @chunk = batch

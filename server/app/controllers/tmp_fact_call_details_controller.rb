@@ -3,16 +3,23 @@ class TmpFactCallDetailsController < ApplicationController
 
   def run_dim
     @tmp_fact_call_details = TmpFactCallDetail.all
-    TmpFactCallDetail.add_dimension(DimProject, :project_name, :tmp_parent_project)
-    TmpFactCallDetail.add_dimension(DimClient, :client_name, :tmp_project_name)
-    TmpFactCallDetail.add_dimension(DimTimezone, :timezone_name, :tmp_timezone)
-    TmpFactCallDetail.add_dimension(DimCallCategory, :call_category, :tmp_call_category)
-    TmpFactCallDetail.add_dimension(DimCallType, :call_type, :tmp_call_type)
-    TmpFactCallDetail.add_dimension(DimCallAction, :call_action, :tmp_call_action)
-    TmpFactCallDetail.add_dimension(DimCallActionReason, :call_action_reason, :tmp_call_action_reason)
-    TmpFactCallDetail.add_dimension(DimCallDisp, :call_disp, :tmp_disp)
-    TmpFactCallDetail.add_dimension(DimCallService, :call_service, :tmp_service_name)
-    TmpFactCallDetail.add_dimension(DimCallService, :call_service, :tmp_service_name)
+    @import = Mudhead::Importer.new(TmpFactCallDetail, nil, {})
+    @import.check_or_add_dims(:tmp_parent_project, DimProject, :project_name)
+    @import.check_or_add_dims(:tmp_timezone, DimTimezone, :timezone_name)
+    @import.check_or_add_dims(:tmp_call_category, DimCallCategory, :call_category)
+    @import.check_or_add_dims(:tmp_call_type, DimCallType, :call_type)
+    @import.check_or_add_dims(:tmp_call_action, DimCallAction, :call_action)
+    @import.check_or_add_dims(:tmp_call_action_reason, DimCallActionReason, :call_action_reason)
+    @import.check_or_add_dims(:tmp_disp, DimCallDisp, :call_disp)
+    @import.check_or_add_dims(:tmp_service_name, DimCallService, :call_service)
+    @import.import_with_assoc(DimClient, TmpFactCallDetail.pluck(:tmp_parent_project, :tmp_project_name), {
+      before_batch_import: -> (importer) {
+        tmp_assocs = DimProject.pluck(:project_name, :id)
+        tmp_options = Hash[*tmp_assocs.flatten]
+        importer.batch_replace(:dim_project_id, tmp_options)
+      },
+      headers: [:dim_project_id, :client_name]
+    })
     redirect_to tmp_fact_call_details_path
   end
 
