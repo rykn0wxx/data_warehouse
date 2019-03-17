@@ -90,6 +90,20 @@
 #   process_file f[:file], f[:model]
 # end
 
+# def get_options(importer, assoc_model, ref_column, target_column)
+#   target_sym = target_column.to_sym
+#   tmp_names = importer.chunk.map { |x| x[ref_column] }.uniq
+#   tmp_assocs = assoc_model.where(target_sym => tmp_names).pluck(target_sym, :id)
+#   tmp_options = Hash[*tmp_assocs.flatten]
+#   tmp_options
+# end
+
+# def upload_with_associations(ar_model, raw_file, batch_options)
+#   file_path = File.new(raw_file)
+#   dim_data = Mudhead::Importer.new(ar_model, file_path, batch_options)
+#   dim_data.import
+# end
+
 # upload_with_associations(DimClient, '../raw_files/dim_client.csv', {
 #   before_batch_import: -> (importer) {
 #     project_names = importer.chunk.map { |x| x[:dim_project_id] }
@@ -122,34 +136,8 @@
 
 # upload_services
 
-# def get_options(importer, assoc_model, ref_column, target_column)
-#   target_sym = target_column.to_sym
-#   tmp_names = importer.chunk.map { |x| x[ref_column] }.uniq
-#   tmp_assocs = assoc_model.where(target_sym => tmp_names).pluck(target_sym, :id)
-#   tmp_options = Hash[*tmp_assocs.flatten]
-#   tmp_options
-# end
-
-# def upload_with_associations(ar_model, raw_file, batch_options)
-#   file_path = File.new(raw_file)
-#   dim_data = Mudhead::Importer.new(ar_model, file_path, batch_options)
-#   dim_data.import
-# end
-
-# upload_with_associations(DimUipService, '../raw_files/dim_uip_service.csv', {
-#   before_batch_import: -> (importer) {
-#     options = get_options(importer, DimCallService, :dim_call_service_id, 'call_service')
-#     importer.batch_replace(:dim_call_service_id, options)
-
-#     options = get_options(importer, DimLanguage, :dim_language_id, 'language_name')
-#     importer.batch_replace(:dim_language_id, options)
-
-#     options = get_options(importer, DimClient, :dim_client_id, 'client_name')
-#     importer.batch_replace(:dim_client_id, options)
-#   }
-# })
-
-# emp_user
-# ivr_param
-
-# DimUipUser
+# Order of Call
+# 1. raw_files (9)
+# 2. upload_with_associations for DimClient (1)
+# 3. upload_with_associations for DimCallService (1)
+# 4. upload_services (1)
