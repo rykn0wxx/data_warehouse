@@ -10,7 +10,6 @@ module Mudhead
     end
 
     def add(result, qty)
-      @processed += result
       @failed += result.failed_instances
       @total  += qty
     end

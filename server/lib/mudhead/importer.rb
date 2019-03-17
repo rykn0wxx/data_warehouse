@@ -24,6 +24,13 @@ module Mudhead
       import_result
     end
 
+    def import_options
+      @import_options ||= options.slice(
+        :validate,
+        :batch_transaction
+      )
+    end
+
     def batch_replace(header_key, options)
       chunk.map! do |line|
         from = line[header_key]
@@ -55,8 +62,8 @@ module Mudhead
         run_callback(:before_batch_import)
         batch_added = to_be_added
         batch_headers = prepare_headers
-        batch_result = @resource.import(batch_headers, batch_added, :validate => true)
-        raise ActiveRecord::Rollback if batch_result.failed_instances.any?
+        batch_result = @resource.import(batch_headers, batch_added, import_options)
+        raise ActiveRecord::Rollback if import_options[:batch_transaction] && batch_result.failed_instances.any?
       end
       batch_result
     end
@@ -68,6 +75,7 @@ module Mudhead
     def prepare_headers
       @headers = chunk.map { |e| e.keys }.uniq.first
       @headers.delete(@options[:excluded_id]) if @options[:excluded_id]
+      @headers
     end
 
     def run_callback(name)
@@ -76,7 +84,8 @@ module Mudhead
 
     def assign_options(options)
       @options = {
-        :batch_size => 1000
+        :batch_size => 1000,
+        :validate => true
       }.merge(options.slice(*OPTIONS))
       smart_options
     end
